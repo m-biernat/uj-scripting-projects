@@ -1,0 +1,6 @@
+__pycache__
+.rasa
+models
+venv
+
+api_key.py
