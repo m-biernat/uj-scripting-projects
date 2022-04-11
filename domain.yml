@@ -5,24 +5,32 @@ intents:
   - goodbye
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
   - bot_challenge
   - hello_world
+  - show_tournaments
+  - provide_details
+  - sign_up
+
+entities:
+  - num
+
+slots:
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: num
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
+  - text: "Hey! Are you interested in e-sport tournaments?"
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  utter_try_to_convince:
+  - text: "Maybe I'll tell you something about it and then you will decide?"
 
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
+  utter_maybe_later:
+  - text: "Ok, maybe you will try again later!"
 
   utter_goodbye:
   - text: "Bye"
@@ -32,6 +40,9 @@ responses:
 
 actions:
   - action_hello_world
+  - action_show_active_tournaments
+  - action_provide_tournament_details
+  - action_try_to_sign_up
 
 session_config:
   session_expiration_time: 60

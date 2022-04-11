@@ -2,29 +2,34 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: new user (interested)
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
   - intent: affirm
-  - action: utter_happy
+  - action: action_show_active_tournaments
 
-- story: sad path 2
+- story: new user (trying to interest - failed)
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
   - intent: deny
-  - action: utter_goodbye
+  - action: utter_try_to_convince
+  - intent: deny
+  - action: utter_maybe_later
+
+- story: new user (trying to interest - succeed)
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: deny
+  - action: utter_try_to_convince
+  - intent: affirm
+  - action: action_show_active_tournaments
+
+- story: new user (not interested)
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: deny
+  - action: utter_maybe_later

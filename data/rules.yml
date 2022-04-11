@@ -16,3 +16,18 @@ rules:
   steps:
   - intent: hello_world
   - action: action_hello_world
+
+- rule: Show active tournaments anytime the user wants to
+  steps: 
+  - intent: show_tournaments
+  - action: action_show_active_tournaments
+
+- rule: Provide tournament details anytime the user wants to
+  steps:
+  - intent: provide_details
+  - action: action_provide_tournament_details
+
+- rule: Try to sign up the user for tournament
+  steps:
+  - intent: sign_up
+  - action: action_try_to_sign_up

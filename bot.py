@@ -4,6 +4,8 @@ import requests
 import api_key
 import service_url
 
+from discord.ext import tasks
+
 client = discord.Client()
 
 @client.event
@@ -11,9 +13,26 @@ async def on_ready():
     print(f'We have logged in as {client.user}')
 
 
+@tasks.loop(minutes=30.0, count=None)
+async def update_results():
+    response = requests.get(service_url.flask + '/api/tournament/latest/results').json()
+    await channel.send(f"@everyone\n{response}")
+
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
+        return
+
+    global channel
+
+    if message.content.startswith('!enable updates'):
+        channel = message.channel
+        update_results.start()
+        return
+
+    if message.content.startswith('!disable updates'):
+        update_results.stop()
         return
 
     response = get_response(message.author.id, message.content)
@@ -22,7 +41,6 @@ async def on_message(message):
     except:
         text = "Oopsie! An error occured, my bad :("
 
-    #await message.channel.send(f'{message.content}, <@{message.author.id}>')
     await message.channel.send(text)
 
 

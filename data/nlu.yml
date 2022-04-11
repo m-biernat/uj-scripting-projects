@@ -16,10 +16,14 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
+    - yo
 
 - intent: goodbye
   examples: |
     - cu
+    - cya
+    - c ya
+    - see ya
     - good by
     - cee you later
     - good night
@@ -34,10 +38,14 @@ nlu:
   examples: |
     - yes
     - y
+    - yup
     - indeed
     - of course
     - that sounds good
     - correct
+    - go on
+    - yea
+    - sure
 
 - intent: deny
   examples: |
@@ -48,40 +56,8 @@ nlu:
     - don't like that
     - no way
     - not really
-
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - not interested
+    - nope
 
 - intent: bot_challenge
   examples: |
@@ -94,3 +70,42 @@ nlu:
   examples: |
     - hello, world
     - hello world
+
+- intent: show_tournaments
+  examples: |
+    - show me available tournaments
+    - whats going on?
+    - are there any tournaments available?
+    - any tournaments?
+    - wanna play
+    - i want to play
+    - i am ready to play
+    - what tournaments?
+    - show me tournaments
+
+- intent: provide_details
+  examples: |
+    - tell me more about #[1](num)
+    - im interested in #[6](num)
+    - anything more about #[2](num)
+    - wanna know about #[16](num)
+    - give me more about #[24](num)
+
+- intent: sign_up
+  examples: |
+    - sign me up for #[1](num)
+    - wanna go for #[14](num)
+    - go for #[2](num)
+    - maybe #[21](num)
+    - sign me for #[5](num)
+    - im ready for #[4](num)
+
+- lookup: num
+  examples: |
+    - 1
+    - 7
+    - 2
+    - 4
+    - 12
+    - 3
+    - 23
