@@ -10,18 +10,28 @@ function love.load()
     love.graphics.setBackgroundColor(gfx.bgColor.r, 
                                      gfx.bgColor.g, 
                                      gfx.bgColor.b)
+
+    love.graphics.setNewFont(64)
+    
     board.setup()
-    block.reset()
+    block.create()
 
     counter = 0
 end
 
 function love.update(dt)
+    if game.isOver == true then
+        gfx.animateGameOver()
+        do return end
+    end
+
     counter = counter + dt
     if counter > game.tickRate then
-        input.beforeMove()
-        block.moveTo(input.x, input.y)
-        input.afterMove()
+        if game.isReady then
+            input.beforeMove()
+            block.moveTo(input.x, input.y)
+            input.afterMove()
+        end
         counter = 0
     end
 end
@@ -41,4 +51,8 @@ function love.keypressed(key)
 function love.draw()
     gfx.drawBlock()
     gfx.drawBoard()
+
+    if game.isOver then
+        gfx.drawGameOver()
+    end
 end

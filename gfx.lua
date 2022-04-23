@@ -7,8 +7,12 @@ gfx.boardOffsetX = 240
 gfx.boardOffsetY = 20
 gfx.rectSize = 25
 
-function gfx.drawRect(mode, x, y, color)
+function gfx.setColor(color)
     love.graphics.setColor(color.r, color.g, color.b, color.a)
+end
+
+function gfx.drawRect(mode, x, y, color)
+    gfx.setColor(color)
     love.graphics.rectangle(mode, 
                             x * gfx.boardSpacing + gfx.boardOffsetX, 
                             y * gfx.boardSpacing + gfx.boardOffsetY, 
@@ -78,6 +82,71 @@ end
 
 function gfx.drawBlock()
     gfx.drawFragments(block.fragment, block.position)
+end
+
+gfx.gameOver = {
+    cover = {
+        color = gfx.color(0, 0, 0, 60),
+        sizeX = gfx.rectSize * 10 + gfx.boardSpacing,
+        sizeY = gfx.rectSize * 20 + 2 * gfx.boardSpacing + 2
+    },
+    text = {
+        color = gfx.color(230, 28, 52, 255),
+        upper = { 
+            text = "GAME",
+            offsetX = gfx.boardOffsetX + 1.75 * gfx.rectSize,
+            offsetY = gfx.boardOffsetY + 8 * gfx.rectSize
+        },
+        lower = {
+            text = "OVER",
+            offsetX = gfx.boardOffsetX + 2 * gfx.rectSize,
+            offsetY = gfx.boardOffsetY + 10.5 * gfx.rectSize
+        }
+    }, 
+    shadow = {
+        color = gfx.color(0, 0, 0, 127)
+    },
+    animation = {
+        current = 300,
+        startAt = 300,
+        finishAt = 0
+    }
+} 
+
+function gfx.drawGameOver()
+    gfx.setColor(gfx.gameOver.cover.color)
+    love.graphics.rectangle("fill", 
+                            gfx.boardOffsetX, 
+                            gfx.boardOffsetY, 
+                            gfx.gameOver.cover.sizeX,
+                            gfx.gameOver.cover.sizeY)
+
+    gfx.setColor(gfx.gameOver.shadow.color)
+    love.graphics.print(gfx.gameOver.text.upper.text, 
+                        gfx.gameOver.text.upper.offsetX - 2, 
+                        gfx.gameOver.text.upper.offsetY + 1 - gfx.gameOver.animation.current, 
+                        0, 1.02, 1.02)
+    love.graphics.print(gfx.gameOver.text.lower.text, 
+                        gfx.gameOver.text.lower.offsetX - 2, 
+                        gfx.gameOver.text.lower.offsetY + 1 - gfx.gameOver.animation.current, 
+                        0, 1.02, 1.02)
+    
+    gfx.setColor(gfx.gameOver.text.color)
+    love.graphics.print(gfx.gameOver.text.upper.text, 
+                        gfx.gameOver.text.upper.offsetX, 
+                        gfx.gameOver.text.upper.offsetY - gfx.gameOver.animation.current, 
+                        0, 1.00, 1.00)
+    love.graphics.print(gfx.gameOver.text.lower.text, 
+                        gfx.gameOver.text.lower.offsetX, 
+                        gfx.gameOver.text.lower.offsetY - gfx.gameOver.animation.current, 
+                        0, 1.00, 1.00)
+end
+
+function gfx.animateGameOver()
+    if (gfx.gameOver.animation.current > gfx.gameOver.animation.finishAt) then
+        gfx.gameOver.animation.current = 
+        gfx.gameOver.animation.current - 0.02 * gfx.gameOver.animation.startAt
+    end
 end
 
 return gfx

@@ -95,6 +95,8 @@ function block.placeOnBoard()
             ::continue::
         end
     end
+
+    game.onBlockPlace()
 end
 
 function block.move()
@@ -102,12 +104,23 @@ function block.move()
     block.position.y = block.nextPosition.y
 end
 
-function block.reset()
+function block.create()
     block.id = math.random(0, 6)
     block.rotation = 0
     block.fragment = fragment[block.id][block.rotation]
     block.position.x = math.random(0, 10 - block.fragment.size.x)
     block.position.y = 0
+
+    for x = 0, block.fragment.size.x - 1 do
+        for y = 0, block.fragment.size.y - 1 do
+            if board[block.position.x + x][block.position.y + y] > 1 then
+                game.onGameOver()
+                do return end
+            end
+        end
+    end
+
+    game.onBlockCreate()
 end
 
 function block.moveTo(x, y)
@@ -118,7 +131,6 @@ function block.moveTo(x, y)
 
     if block.downCollision == true then
         block.placeOnBoard()
-        block.reset()
     elseif block.sideCollision == true then
         block.nextPosition.x = block.position.x
         block.nextPosition.y = block.position.y + 1
@@ -127,7 +139,6 @@ function block.moveTo(x, y)
         
         if block.downCollision == true then
             block.placeOnBoard()
-            block.reset()
         else
             block.move()
         end
