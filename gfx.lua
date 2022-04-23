@@ -53,7 +53,9 @@ gfx.colorRef = {
     [13] = gfx.color(230, 28, 52, 255),     --  ##
     
     [14] = gfx.color(179, 124, 179, 255),   --  #
-    [15] = gfx.color(152, 102, 153, 255)    -- ###
+    [15] = gfx.color(152, 102, 153, 255),    -- ###
+
+    [255] = gfx.color(75, 84, 95, 255)
 }
 
 function gfx.drawBoard()
@@ -62,7 +64,11 @@ function gfx.drawBoard()
             if board[x][y] == 1 then
                 gfx.drawRect("line", x, y, gfx.colorRef[board[x][y]])
             else
-                gfx.drawRect("fill", x, y, gfx.colorRef[board[x][y]])
+                if board.rows[y].filled == true then
+                    gfx.drawRect("fill", x, y, gfx.colorRef[255])
+                else
+                    gfx.drawRect("fill", x, y, gfx.colorRef[board[x][y]])
+                end
                 gfx.drawRect("line", x, y, gfx.colorRef[1])
             end
         end
@@ -197,6 +203,24 @@ function gfx.animateGameOver()
     if (gfx.gameOver.animation.current > gfx.gameOver.animation.finishAt) then
         gfx.gameOver.animation.current = 
         gfx.gameOver.animation.current - 0.02 * gfx.gameOver.animation.startAt
+    end
+end
+
+gfx.scoreAnimation = {
+    reps = 0,
+    repsTarget = 3,
+}
+
+function gfx.animateScore(val)
+    if gfx.scoreAnimation.reps < gfx.scoreAnimation.repsTarget then
+        gfx.colorRef[255].a = math.sin(val)
+    else
+        gfx.scoreAnimation.reps = 0
+        game.onScore()
+    end
+
+    if val == 0 then
+        gfx.scoreAnimation.reps = gfx.scoreAnimation.reps + 1
     end
 end
 

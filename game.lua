@@ -5,7 +5,7 @@ game.fallTickRate = 0.5
 game.isReady = true
 game.isOver = false
 game.nextBlockId = 0
-game.score = 0 
+game.score = 0
 
 function game.onStart()
     board.setup()
@@ -22,7 +22,18 @@ function game.onBlockMove()
 end
 
 function game.onBlockPlace()
+    board.scan()
     block.create(game.nextBlockId)
+end
+
+function game.onFill()
+    game.isReady = false
+    game.score = game.score + 100
+end
+
+function game.onScore()
+    board.move()
+    game.isReady = true
 end
 
 function game.onGameOver()

@@ -24,12 +24,16 @@ function love.update(dt)
 
     counter = counter + dt
     if counter > game.tickRate then
-        if game.isReady then
+        if game.isReady == true then
             input.beforeMove()
             block.moveTo(input.x, input.y)
             input.afterMove()
         end
         counter = 0
+    end
+
+    if board.isFilled == true then
+        gfx.animateScore(counter)
     end
 end
 
