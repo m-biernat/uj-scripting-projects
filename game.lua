@@ -4,9 +4,17 @@ game.tickRate = 0.5
 game.fallTickRate = 0.5
 game.isReady = true
 game.isOver = false
+game.nextBlockId = 0
+game.score = 0 
+
+function game.onStart()
+    board.setup()
+    game.nextBlockId = block.getNext()
+    block.create(game.nextBlockId)
+end
 
 function game.onBlockCreate()
-    
+    game.nextBlockId = block.getNext()
 end
 
 function game.onBlockMove()
@@ -14,7 +22,7 @@ function game.onBlockMove()
 end
 
 function game.onBlockPlace()
-    block.create()
+    block.create(game.nextBlockId)
 end
 
 function game.onGameOver()

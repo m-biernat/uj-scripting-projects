@@ -104,8 +104,8 @@ function block.move()
     block.position.y = block.nextPosition.y
 end
 
-function block.create()
-    block.id = math.random(0, 6)
+function block.create(blockId)
+    block.id = blockId
     block.rotation = 0
     block.fragment = fragment[block.id][block.rotation]
     block.position.x = math.random(0, 10 - block.fragment.size.x)
@@ -172,6 +172,10 @@ function block.rotate()
 
     block.rotation = rotation
     block.fragment = rotated
+end
+
+function block.getNext()
+    return math.random(0, 6)
 end
 
 return block

@@ -10,11 +10,8 @@ function love.load()
     love.graphics.setBackgroundColor(gfx.bgColor.r, 
                                      gfx.bgColor.g, 
                                      gfx.bgColor.b)
-
-    love.graphics.setNewFont(64)
     
-    board.setup()
-    block.create()
+    game.onStart()
 
     counter = 0
 end
@@ -49,6 +46,9 @@ function love.keypressed(key)
  end
 
 function love.draw()
+    gfx.showScore()
+    gfx.drawNextBlock()
+    
     gfx.drawBlock()
     gfx.drawBoard()
 
