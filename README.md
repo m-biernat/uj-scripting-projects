@@ -22,7 +22,7 @@ Project requires *LÖVE* version *11.4* that can be found [here](https://love2d.
 
 ## Run
 
-Download ```tetris.love``` from releases and then double-click it (with *LÖVE* installed).
+Double-click to open ```tetris.love``` (with *LÖVE* installed).
 
 ## Credits
 
