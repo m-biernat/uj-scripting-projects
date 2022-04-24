@@ -7,9 +7,9 @@ Tetris clone made with *LÖVE*.
 The game has the following features:
 - **7** different colored blocks;
 - multiple control schemas:
--- **keyboard** - *w, a, s, d* and *arrow keys*;
--- **mouse** - click on *up, down, left or right* side of the gird;
--- **touch** - the same as mouse but with a finger.
+  - **keyboard** - *w, a, s, d* and *arrow keys*;
+  - **mouse** - click on *up, down, left or right* side of the gird;
+  - **touch** - the same as mouse but with a finger.
 - saving and loading games;
 - simple sound effects;
 - simple animations.
