@@ -31,6 +31,10 @@ function game.start()
 end
 
 function game.load()
+    if love.filesystem.getInfo(game.savename, "file") == nil then
+        do return end
+    end
+
     love.filesystem.load(game.savename)()
     
     game.nextBlockId = save._game.nextBlockId
