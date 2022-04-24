@@ -1,3 +1,5 @@
+require "button"
+
 gfx = {}
 
 gfx.boardSpacing = 28
@@ -61,13 +63,13 @@ gfx.colorRef = {
 function gfx.drawBoard()
     for x = 0, 9 do
         for y = 0, 19 do
-            if board[x][y] == 1 then
-                gfx.drawRect("line", x, y, gfx.colorRef[board[x][y]])
+            if board.arr[x][y] == 1 then
+                gfx.drawRect("line", x, y, gfx.colorRef[board.arr[x][y]])
             else
                 if board.rows[y].filled == true then
                     gfx.drawRect("fill", x, y, gfx.colorRef[255])
                 else
-                    gfx.drawRect("fill", x, y, gfx.colorRef[board[x][y]])
+                    gfx.drawRect("fill", x, y, gfx.colorRef[board.arr[x][y]])
                 end
                 gfx.drawRect("line", x, y, gfx.colorRef[1])
             end
@@ -133,7 +135,7 @@ gfx.nextBlock = {
     text = "NEXT\nBLOCK",
     color = gfx.color(0, 0, 0, 150),
     offsetX = gfx.sidePanel.offsetX,
-    offsetY = gfx.boardOffsetY + 5 * gfx.rectSize
+    offsetY = gfx.boardOffsetY + 4 * gfx.rectSize - 15
 }
 
 function gfx.drawNextBlock()
@@ -151,7 +153,7 @@ function gfx.drawNextBlock()
         offset = -1 * (frag.size.x - 3) * 0.5
     end
 
-    gfx.drawFragments(frag, {x = 11 + offset, y = 7}, true)
+    gfx.drawFragments(frag, {x = 11 + offset, y = 5.5}, true)
 end
 
 gfx.gameOver = {
@@ -223,5 +225,41 @@ function gfx.animateScore(val)
         gfx.scoreAnimation.reps = gfx.scoreAnimation.reps + 1
     end
 end
+
+gfx.buttons = {
+    size = {
+        x = gfx.rectSize * 4 + 9,
+        y = gfx.rectSize * 2 + 3
+    },
+    offsetX = gfx.sidePanel.offsetX - 4
+}
+
+gfx.startButton = Button:Create("START", 
+                                gfx.buttons.offsetX, 
+                                gfx.boardOffsetY + 252, 
+                                gfx.buttons.size.x, 
+                                gfx.buttons.size.y, 
+                                game.start)
+
+gfx.loadButton = Button:Create("LOAD", 
+                               gfx.buttons.offsetX, 
+                               gfx.boardOffsetY + 336, 
+                               gfx.buttons.size.x, 
+                               gfx.buttons.size.y, 
+                               game.load)
+
+gfx.saveButton = Button:Create("SAVE", 
+                               gfx.buttons.offsetX, 
+                               gfx.boardOffsetY + 420, 
+                               gfx.buttons.size.x, 
+                               gfx.buttons.size.y, 
+                               game.save)
+
+gfx.quitButton = Button:Create("QUIT", 
+                               gfx.buttons.offsetX, 
+                               gfx.boardOffsetY + 504, 
+                               gfx.buttons.size.x, 
+                               gfx.buttons.size.y, 
+                               game.quit)
 
 return gfx

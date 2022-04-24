@@ -2,9 +2,9 @@ require "board"
 require "fragment"
 
 block = {}
-block.id = 4
+block.id = 0
 block.rotation = 0
-block.fragment = fragment[4][0]
+block.fragment = fragment[0][0]
 block.position = {x = 5, y = 0}
 block.nextPosition = {}
 block.sideCollision = false
@@ -29,7 +29,7 @@ function block.checkSideBorderCollision(position)
 end
 
 function block.checkDownBoardCollision(position)
-    if board[position.x][position.ny] > 1 then
+    if board.arr[position.x][position.ny] > 1 then
         return true
     else
         return false
@@ -37,7 +37,7 @@ function block.checkDownBoardCollision(position)
 end
 
 function block.checkSideBoardCollision(position)
-    if board[position.nx][position.y] > 1 then
+    if board.arr[position.nx][position.y] > 1 then
         return true
     else
         return false
@@ -90,7 +90,7 @@ function block.placeOnBoard()
             position.x = block.position.x + x
             position.y = block.position.y + y
             
-            board[position.x][position.y] = block.fragment[x][y]
+            board.arr[position.x][position.y] = block.fragment[x][y]
 
             ::continue::
         end
@@ -102,6 +102,7 @@ end
 function block.move()
     block.position.x = block.nextPosition.x
     block.position.y = block.nextPosition.y
+    game.onBlockMove()
 end
 
 function block.create(blockId)
@@ -113,7 +114,7 @@ function block.create(blockId)
 
     for x = 0, block.fragment.size.x - 1 do
         for y = 0, block.fragment.size.y - 1 do
-            if board[block.position.x + x][block.position.y + y] > 1 then
+            if board.arr[block.position.x + x][block.position.y + y] > 1 then
                 game.onGameOver()
                 do return end
             end
@@ -163,7 +164,7 @@ function block.rotate()
     else
         for x = 0, rotated.size.x - 1 do
             for y = 0, rotated.size.y - 1 do
-                if board[block.position.x + x][block.position.y + y] > 1 then
+                if board.arr[block.position.x + x][block.position.y + y] > 1 then
                     do return end
                 end
             end
@@ -176,6 +177,29 @@ end
 
 function block.getNext()
     return math.random(0, 6)
+end
+
+function block.save()
+    local _block = {
+        id = block.id,
+        rotation = block.rotation,
+        fragment = block.fragment,
+        position = block.position,
+        nextPosition = block.nextPosition,
+        sideCollision = block.sideCollision,
+        downCollision = block.downCollision
+    }
+    return _block
+end
+
+function block.load(save)
+    block.id = save.id
+    block.rotation = save.rotation
+    block.fragment = save.fragment
+    block.position = save.position
+    block.nextPosition = save.nextPosition
+    block.sideCollision = save.sideCollision
+    block.downCollision = save.downCollision
 end
 
 return block

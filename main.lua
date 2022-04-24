@@ -2,6 +2,7 @@ require "game"
 require "block"
 require "gfx"
 require "input"
+require "sfx"
 
 function love.load()
     love.window.setTitle("Tetris")
@@ -11,7 +12,9 @@ function love.load()
                                      gfx.bgColor.g, 
                                      gfx.bgColor.b)
     
-    game.onStart()
+    board.setup()
+
+    sfx.load()
 
     counter = 0
 end
@@ -37,6 +40,20 @@ function love.update(dt)
     end
 end
 
+function love.mousepressed(x, y, button, istouch)
+    if istouch or button == 1 then
+        input.upButton:Press(x, y)
+        input.downButton:Press(x, y)
+        input.leftButton:Press(x, y)
+        input.rightButton:Press(x, y)
+
+        gfx.startButton:Press(x, y)
+        gfx.loadButton:Press(x, y)
+        gfx.saveButton:Press(x, y)
+        gfx.quitButton:Press(x, y)
+    end
+end
+
 function love.keypressed(key)
     if key == "a" or key == "left" then
         input.moveLeft()
@@ -47,16 +64,23 @@ function love.keypressed(key)
     elseif key == "w" or key == "up" then
         input.rotate()
     end
- end
+end
 
 function love.draw()
     gfx.showScore()
     gfx.drawNextBlock()
     
-    gfx.drawBlock()
+    if game.isReady == true then
+        gfx.drawBlock()
+    end
     gfx.drawBoard()
 
     if game.isOver then
         gfx.drawGameOver()
     end
+
+    gfx.startButton:Draw()
+    gfx.loadButton:Draw()
+    gfx.saveButton:Draw()
+    gfx.quitButton:Draw()
 end

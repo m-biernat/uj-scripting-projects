@@ -47,4 +47,31 @@ function input.afterMove()
     game.tickRate = game.fallTickRate
 end
 
+input.upButton = Button:Create("UP", 
+                               gfx.boardOffsetX, 
+                               gfx.boardOffsetY, 
+                               277, 
+                               137, 
+                               input.rotate)
+
+input.downButton = Button:Create("DOWN", 
+                                 gfx.boardOffsetX, 
+                                 gfx.boardOffsetY + 420, 
+                                 277, 
+                                 137, 
+                                 input.moveDown)
+
+input.leftButton = Button:Create("LEFT", 
+                                 gfx.boardOffsetX, 
+                                 gfx.boardOffsetY + 140, 
+                                 137, 
+                                 277, 
+                                 input.moveLeft)
+
+input.rightButton = Button:Create("RIGHT", 
+                                  gfx.boardOffsetX + 140, 
+                                  gfx.boardOffsetY + 140, 
+                                  137, 
+                                  277, 
+                                  input.moveRight)
 return input
