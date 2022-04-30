@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Viewer</title>
+</head>
+<body>
+    <div style="margin: auto; width: 50%; padding: 10px; text-align: center; font-family: monospace;">
+        <h2>Blueprint Viewer</h2>
+        <div id="drawn-layer"></div>
+        <p id="slider-label">Layer 0</p>
+        <input type="range" min="0" max="64" value="0" id="slider">
+        <br><br><hr><br>
+        <button onclick="copyBlueprint()">Copy blueprint</button>
+    </div>
+</body>
+<script>
+    const AIR = 0, WATER = 8, GRASS = 2, COBBLESTONE = 4, STONE_BRICKS = 98, 
+          COBBLESTONE_WALL = 139, STONE_SLAB = 44, OAK_WOOD_SLAB = 44, 
+          PLANKS_OAK = 5, OAK_WOOD_STAIRS = 53, GLASS_PANE = 102, TORCH = 50;
+
+    const player = { onChat: function() {} }; 
+</script>
+<script src="castle-builder.js"></script>
+<script>
+    const drawnLayer = document.getElementById("drawn-layer");
+    const slider = document.getElementById("slider");
+    const sliderLabel = document.getElementById("slider-label");
+    slider.setAttribute("max", Z - 1);
+    
+    sketchCastle();
+    
+    onSliderChange(slider.value);
+
+    slider.oninput = function() {
+        onSliderChange(this.value);
+    }
+
+    function onSliderChange(value) {
+        drawLayer(value);
+        sliderLabel.textContent = `Layer ${value}`;
+    }
+
+    function drawLayer(layer) {
+        drawnLayer.innerHTML = "";
+        for (let y = 0; y < Y; y++) {
+            const paragraph = document.createElement("p"); 
+            drawnLayer.appendChild(paragraph);
+            paragraph.style = "margin: 0;"
+            paragraph.innerHTML += "&emsp;";
+            for (let x = 0; x < X; x++) {
+                paragraph.innerHTML += getSymbol(getElement(layer, x, y)) + "&emsp;";
+            }
+        }
+    }
+
+    function getSymbol(type) {
+        switch (type) {
+            case AIR:
+                return ".";
+            case WATER:
+                return "~";
+            case GRASS:
+                return "M";
+            case COBBLESTONE:
+                return "&";
+            case STONE_BRICKS:
+                return "#";
+            case COBBLESTONE_WALL:
+                return "!";
+            case STONE_SLAB:
+                return "@";
+            case OAK_WOOD_SLAB:
+                return "=";
+            case PLANKS_OAK:
+                return "="
+            case OAK_WOOD_STAIRS:
+                return "\\";
+            case GLASS_PANE:
+                return "E";
+            case TORCH:
+                return "i";
+            default:
+                return " ";
+        }
+    }
+
+    function copyBlueprint() {
+        let copiedBlueprint = `[${blueprint}];`;
+        navigator.clipboard.writeText(copiedBlueprint);
+        alert("Blueprint has been copied!");
+    }
+</script>
+</html>
