@@ -48,6 +48,27 @@ class Teleport < Trigger
     end
 end
 
+class Coin < Trigger
+    @@player
+    
+    def initialize(x, y)
+        super(x, y, 10, 'yellow')
+        @taken = false
+    end
+
+    def action
+        if !@taken
+            @@player.score += 1
+            @shape.remove
+            @taken = true
+        end
+    end
+
+    def self.setup(player)
+        @@player = player
+    end
+end
+
 class Collider < GameObject
     attr_accessor :shape
 

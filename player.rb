@@ -2,6 +2,7 @@ class Player
     attr_accessor :p
     attr_reader :size
     attr_accessor :v
+    attr_accessor :score
 
     def initialize(x, y)
         @size = 25
@@ -16,6 +17,8 @@ class Player
         @j_frames = 30
 
         @shape = Square.new(x: @p.x, y: @p.y, size: @size, color: 'gray')
+        
+        @score = 0
     end
 
     def move

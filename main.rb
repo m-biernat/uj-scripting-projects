@@ -3,12 +3,20 @@ require './player'
 require './physics'
 require './objects'
 require './level'
+require './ui'
 
 set width: 800, height: 600
 set title: "Ruby2D Game"
 set background: 'blue'
 
 @player = Player.new(50, 420)
+
+@colliders = get_test_level()
+
+Teleport.setup(@colliders, @player)
+Coin.setup(@player)
+
+@score = Score.new(@player)
 
 on :key_held do |event|
     if event.key == 'a'
@@ -24,10 +32,6 @@ on :key_down do |event|
     end
 end
 
-@colliders = get_test_level()
-
-Teleport.setup(@colliders, @player)
-
 update do
     @player.move
     
@@ -38,6 +42,8 @@ update do
     keep_in_bounds(@player)
     
     @player.after_collsions
+    
+    @score.update
 end
 
 show
