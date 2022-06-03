@@ -1,12 +1,14 @@
 require 'ruby2d'
 require './player'
 require './physics'
+require './objects'
+require './level'
 
 set width: 800, height: 600
 set title: "Ruby2D Game"
 set background: 'blue'
 
-@player = Player.new()
+@player = Player.new(50, 420)
 
 on :key_held do |event|
     if event.key == 'a'
@@ -22,13 +24,17 @@ on :key_down do |event|
     end
 end
 
-@obj = Rectangle.new(x: Window.width / 2, y: Window.height - 100, width: 200, height: 100, color: 'green')
-#@trg = Circle.new(x: 700, y: 550, radius: 30, color: 'fuchsia')
+@colliders = get_test_level()
+
+Teleport.setup(@colliders, @player)
 
 update do
     @player.move
     
-    resolve_collision(@obj, @player)
+    @colliders.each do |collider|
+        collider.check(@player)
+    end
+
     keep_in_bounds(@player)
     
     @player.after_collsions

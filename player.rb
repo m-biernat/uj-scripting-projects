@@ -3,10 +3,8 @@ class Player
     attr_reader :size
     attr_accessor :v
 
-    def initialize
+    def initialize(x, y)
         @size = 25
-        x = (Window.width / 2) - (@size / 2)
-        y = (Window.height / 2) - (@size / 2)
         @p = Vec2(x, y)
         @v = Vec2(0, 0)
         

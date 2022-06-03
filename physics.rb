@@ -83,8 +83,10 @@ def keep_in_bounds(object)
     if object.p.y <= 0
         object.p.y = 0
     elsif object.p.y >= height
-        object.p.y = height
-        object.v.y = 0
+        #object.p.y = height
+        #object.v.y = 0
+        puts 'You died!'
+        close
     end
 end
 
@@ -136,6 +138,20 @@ def resolve_collision(collider, object)
         object.p.x = collider.x - object.size
         object.v.x = 0
     end
+end
+
+def trigger(collider, object)
+    x1 = object.p.x
+    x2 = object.p.x + object.size
+    y1 = object.p.y
+    y2 = object.p.y + object.size
+
+    a = collider.contains? x1, y1
+    b = collider.contains? x1, y2
+    c = collider.contains? x2, y1
+    d = collider.contains? x2, y2
+    
+    return (a || b || c || d)
 end
 
 =begin Unfortunately code bewlow isn't working as intended
