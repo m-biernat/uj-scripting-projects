@@ -11,7 +11,8 @@ set background: 'blue'
 
 @player = Player.new(50, 420)
 
-@colliders = get_test_level()
+#@colliders = get_test_level()
+@colliders = load_level('test_level')
 
 Teleport.setup(@colliders, @player)
 Coin.setup(@player)

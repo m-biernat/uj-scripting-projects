@@ -1,4 +1,5 @@
 require './objects'
+require 'json'
 
 def get_test_level
     colliders = []
@@ -28,5 +29,56 @@ def get_test_level
     colliders.push(Enemy.new(620 + w_off(1), 255, 75, 2))
     colliders.push(Obstacle.new(550 + w_off(1), 200, 40, 80))
     
+    return colliders
+end
+
+def load_level(name)
+    path = './' + name + '.json'
+    file = File.read(path)
+    hash = JSON.parse(file)
+
+    colliders = []
+
+    for i in 0..(hash.length() - 1)
+        hash[i]['platforms'].each do |platform|
+            colliders.push(
+                Platform.new(platform['x'] + w_off(i), 
+                             platform['w'], 
+                             platform['h'])
+            )
+        end
+        hash[i]['obstacles'].each do |obstacle|
+            colliders.push(
+                Obstacle.new(obstacle['x'] + w_off(i), 
+                             obstacle['y'],
+                             obstacle['w'], 
+                             obstacle['h'])
+            )
+        end
+        hash[i]['teleports'].each do |teleport|
+            colliders.push(
+                Teleport.new(teleport['x'] + w_off(i), 
+                             teleport['y'],
+                             teleport['t_off'], 
+                             teleport['t_px'],
+                             teleport['t_py'])
+            )
+        end
+        hash[i]['coins'].each do |coin|
+            colliders.push(
+                Coin.new(coin['x'] + w_off(i), 
+                         coin['y'])
+            )
+        end
+        hash[i]['enemies'].each do |enemy|
+            colliders.push(
+                Enemy.new(enemy['x'] + w_off(i), 
+                          enemy['y'],
+                          enemy['range'],
+                          enemy['speed'])
+            )
+        end
+    end
+
     return colliders
 end
