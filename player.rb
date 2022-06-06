@@ -3,6 +3,7 @@ class Player
     attr_reader :size
     attr_accessor :v
     attr_accessor :score
+    attr_reader :lives
 
     def initialize(x, y)
         @size = 25
@@ -19,6 +20,7 @@ class Player
         @shape = Square.new(x: @p.x, y: @p.y, size: @size, color: 'gray')
         
         @score = 0
+        @lives = 3
     end
 
     def move
@@ -54,6 +56,15 @@ class Player
     def jump
         if @v.y == 0
             @v.y = -@v_jump
+        end
+    end
+
+    def hit
+        @lives -= 1
+
+        if @lives < 1
+            puts 'You died!'
+            close
         end
     end
 end

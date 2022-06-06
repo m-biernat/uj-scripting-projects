@@ -15,8 +15,10 @@ set background: 'blue'
 
 Teleport.setup(@colliders, @player)
 Coin.setup(@player)
+Enemy.setup(@player)
 
 @score = Score.new(@player)
+@life = Life.new(@player)
 
 on :key_held do |event|
     if event.key == 'a'
@@ -44,6 +46,8 @@ update do
     @player.after_collsions
     
     @score.update
+    @life.update
+    Enemy.update
 end
 
 show

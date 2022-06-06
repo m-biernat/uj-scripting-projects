@@ -69,6 +69,49 @@ class Coin < Trigger
     end
 end
 
+class Enemy < Trigger
+    @@player
+    @@enemies = []
+
+    attr_reader :shape
+    attr_reader :range
+    attr_accessor :speed
+    attr_accessor :counter
+
+    def initialize(x, y, range, speed)
+        super(x, y, 15, 'black')
+        @@enemies.append(self)
+        @range = range
+        @speed = speed
+        @counter = 0
+        @attacked = false
+    end
+
+    def action
+        if !@attacked
+            @@player.hit
+            @shape.remove
+            @attacked = true
+        end
+    end
+
+    def self.setup(player)
+        @@player = player
+    end
+
+    def self.update()
+        @@enemies.each do |enemy|
+            if enemy.counter > enemy.range
+                enemy.speed = -enemy.speed
+                enemy.counter = 0
+            end
+
+            enemy.shape.x += enemy.speed
+            enemy.counter += 1
+        end
+    end
+end
+
 class Collider < GameObject
     attr_accessor :shape
 
